@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="img/logo_umtas.png">
     <style>
-        /* RESET */
         * {
             margin: 0; padding: 0;
             box-sizing: border-box;
@@ -180,17 +179,17 @@
       font-size: 14px;
       color: #555;
       margin-bottom: 15px;
-      overflow: hidden;        /* Sembunyikan teks yang kelebihan */
-      text-overflow: ellipsis; /* Tambahkan tanda titik-titik (...) */
+      overflow: hidden;
+      text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 2;   /* Batas baris, bisa diubah */
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
 
     .button-group {
       display: flex;
       justify-content: space-between;
-      
+
     }
 
     .btn {
@@ -225,37 +224,38 @@
       position: relative;
       font-size: 16px;
       line-height: 1.5;
-}
+    }
 
-.alert-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
+    .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    }
 
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
+    .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    }
 
-.alert ul {
-  margin: 0;
-  padding-left: 20px;
-}
+    .alert ul {
+    margin: 0;
+    padding-left: 20px;
+    }
 
-.closebtn {
-  position: absolute;
-  top: 8px;
-  right: 16px;
-  font-size: 20px;
-  cursor: pointer;
-  color: inherit;
-}
+    .closebtn {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+    }
 
     </style>
 </head>
 <body>
+   {{-- nav bar --}}
   <x-app-layout>
        <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -264,6 +264,7 @@
     </x-slot>
     <div class="bawah">
         <div class="container">
+    {{-- alert --}}
     <br>
      @if (session('success'))
                 <div class="alert alert-success">
@@ -304,14 +305,13 @@
             <button type="submit" class="btn btn-primary">Simpan Informasi</button>
         </form>
     </div>
-
    <br>
-
   <div class="info-container">
+
     <!-- Card 1 -->
     @foreach ($informasi as $info)
     <div class="info-card">
-      <img src="{{ asset('uploads/' . $info->gambar) }}" alt="{{ $info->judul }}"
+      <img src="{{ url('uploads/'.$info->gambar) }}" alt="{{ $info->judul }}"
          style="width:100%; height:200px; object-fit:cover;" />
         <div class="info-content">
         <div class="info-title">{{ $info->judul }}</div>
@@ -319,7 +319,7 @@
           {{ $info->deskripsi }}
         </div>
         <div class="button-group">
-          <a href="{{ route('admin.informasi.edit', ['id' =>$info->id]) }}" class="btn btn-edit">
+          <a href="{{ route('admin.informasi.edit', ['slug' =>$info->slug]) }}" class="btn btn-edit">
               <i class="fas fa-edit"></i>
               Edit
           </a>
@@ -335,11 +335,20 @@
       </div>
     </div>
     @endforeach
-
-
     <!-- Tambahkan card lainnya jika perlu -->
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  const swal = $('.swal').data('swal');
+  if (swal) {
+    swal.fire({
+      'title':'success',
+      'text': swal,
+      'icon':'success'
+    })
+  }
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const maxLength = 150;
@@ -368,7 +377,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
 </x-app-layout>
 </body>
 </html>

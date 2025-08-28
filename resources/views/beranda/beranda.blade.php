@@ -817,18 +817,7 @@
     <a href="login">Admin</a>
   </nav>
 </header>
-{{-- <div class="text-overlay">
-    <h1>Selamat Datang di Website Resmi ICT UMTAS</h1>
-    <p>umtas dari local untuk global</p>
-    </div> --}}
 
-  {{-- <div class=hero-title fade-in>
-    <div class="welcome">
-      <div class="teks-utama">Selamat Datang di Website Resmi ICT UMTAS</div>
-        <div class="teks-sub">umtas dari local untuk global</div>
-    </div> --}}
-  
-    
 {{-- --- Banner Slider --- --}}
  <section class="slider">
   @foreach ($informasi->take(6) as $index => $info)
@@ -837,7 +826,7 @@
         <div class="content-card-anim">
           <p class="date">{{ \Carbon\Carbon::parse($info->created_at)->format('Y-m-d H:i') }}</p>
           <h2 class="title">{{ $info->judul }}</h2>
-          <a href="{{ route('informasi.show', $info->id) }}" class="DetailButtonBanner">Selengkapnya</a>
+            <a href="{{ route('informasi.show', $info->slug) }}" class="DetailButtonBanner">Selengkapnya</a>
         </div>
       </div>
     </div>
@@ -855,16 +844,16 @@
 </section>
 
 <!-- Section Tentang Kami -->
+@foreach($tentang_kami as $item)
 <section class="tentang-kami">
   <div class="tentang-box">
-    <h3>Tentang Kami</h3>
+    <h3>{{ $item->judul }}</h3>
     <p>
-      ICT UMTAS adalah Unit Pelaksana Teknis Sistem Informasi Manajemen di Universitas Muhammadiyah Tasikmalaya (UMTAS).
-      ICT merupakan unit yang memberikan layanan infrastruktur teknologi informasi, layanan data dan sistem informasi
-      serta layanan komputasi sebagai penunjang berjalannya proses akademik di lingkungan Universitas Muhammadiyah Tasikmalaya.
+         {{ $item->deskripsi }}
     </p>
   </div>
 </section>
+@endforeach
 <div class="clearfix fade-in">
     <h1>Berita Terbaru</h1>
 </div>
@@ -873,7 +862,7 @@
  <div class="card-list fade-in" id="cardList">
   @foreach ($informasi->take(6) as $index => $info)
     <div class="card" data-index="{{ $index }}">
-      <img src="{{ asset('uploads/' . $info->gambar) }}" alt="{{ $info->judul }}" />
+      <img src="{{ url('uploads/'.$info->gambar) }}" alt="{{ $info->judul }}" />
       <div class="card-content">
         <p class="date">
           <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($info->tanggal)->format('d F Y') }}
@@ -1038,7 +1027,7 @@
     });
   }
 
-  
+
 
   function nextSlide() {
     current = (current + 1) % slides.length;

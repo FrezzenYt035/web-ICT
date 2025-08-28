@@ -383,14 +383,14 @@ h1 {
         <div class="card-list fade-in" id="cardList">
   @foreach ($informasi as $index => $info)
     <div class="card" data-index="{{ $index }}">
-      <img src="{{ asset('uploads/' . $info->gambar) }}" alt="{{ $info->judul }}" />
+      <img src="{{ url('uploads/'.$info->gambar) }}" alt="{{ $info->judul }}" />
       <div class="card-content">
         <p class="date">
           <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($info->tanggal)->format('d F Y') }}
         </p>
         <h3 class="judul">{{ $info->judul }}</h3>
         <p class="truncate-3">{{ $info->deskripsi }}</p>
-        <a href="{{ url('informasi/' . $info->id) }}" class="read-more">Selengkapnya</a>
+        <a href="{{ url('informasi/' . $info->slug) }}" class="read-more">Selengkapnya</a>
       </div>
     </div>
   @endforeach

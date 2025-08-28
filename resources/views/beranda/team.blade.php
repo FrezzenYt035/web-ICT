@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Team ICT UMTAS</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="styles.cardheet" href="style.css" />
   <style>
     body {
             margin: 0;
@@ -132,7 +132,8 @@ h1 {
 
 .card img {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
 }
 
 .card-content {
@@ -268,37 +269,17 @@ h1 {
     <h1>Team ICT UMTAS</h1>
     <div class="project-grid">
 
-      <div class="card">
-        <img src="img/placeholder.png" alt="">
-        <div class="card-content">
-          <h3>Fahrurizal Muldiana</h3>
-          <button onclick="location.href='profil_p'">Detail</button>
+        @foreach($team as $teamMember)
+        <div class="card">
+            <img src="{{ url('uploads/' . $teamMember->image) }}" alt="{{ $teamMember->name }}">
+            <div class="card-content">
+            <h3>{{ $teamMember->name }}</h3>
+            <a href="{{ $teamMember->website }}" target="_blank">{{ $teamMember->website }}</a>
+            <p>{{ $teamMember->position }}</p>
+            <button onclick="window.location.href='{{ route('team.show', $teamMember->slug) }}'">Detail</button>
+            </div>
         </div>
-      </div>
-
-      <div class="card">
-        <img src="img/placeholder.png" alt="">
-        <div class="card-content">
-          <h3>Fajar Hafid Abdilah</h3>
-          <button onclick="location.href='profile_p2'">Detail</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="img/placeholder.png" alt="">
-        <div class="card-content">
-          <h3>Nailul Ngafwa</h3>
-         <button onclick="location.href='profile_p3'">Detail</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="img/placeholder.png" alt="">
-        <div class="card-content">
-          <h3>Lukman Aditya Anggara</h3>
-          <button onclick="location.href='profile_p4'">Detail</button>
-        </div>
-      </div>
+        @endforeach
 
     </div>
   </main>

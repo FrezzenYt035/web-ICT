@@ -14,15 +14,9 @@ return new class extends Migration
         Schema::create('informasi', function (Blueprint $table) {
             $table->id();
             $table->string('judul', 255);
+            $table->string('slug')->unique();
             $table->text('deskripsi', 65535);
             $table->string('gambar')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('informasis', function (Blueprint $table) {
-            $table->id();
-            $table->string('judul');
-            $table->text('deskripsi');
             $table->timestamps();
         });
 

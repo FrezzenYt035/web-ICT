@@ -179,7 +179,7 @@
 .tentang-gambar {
   position: relative;
   width: 100%;
-  max-height: 350px;
+  max-height: 500px;
   overflow: hidden;
   object-position: center 80%;
 }
@@ -191,18 +191,43 @@
   display: block;
   position: flex;
   transform: translateY(-50%);
-  
-  
+
+
 }
 
 /* Konten teks di bawah gambar */
-.tentang-content {
-  padding: 40px;
-  max-width: 1000px;
-  margin: -30px auto 0 auto;
+.card-tentang {
+  position: relative;
+  background: rgba(0, 11, 77, 0.9); /* biru tua semi transparan */
+  color: white;
+  border-radius: 16px;
+  padding: 30px 40px;
+  width: 90%;              /* lebih panjang */
+  max-width: 1800px;       /* batasi biar rapi di layar lebar */
+  min-height: 250px;       /* tinggi minimum */
+  margin: -100px auto 50px 70px; /* geser ke atas + lebih kiri */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  z-index: 2;
 }
 
-.judul {
+.tentang-content {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.card-tentang .judul {
+  color: yellow;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.card-tentang .deskripsi {
+  color: #f1f1f1;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* .judul {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 15px;
@@ -214,7 +239,7 @@
   color: #555;
   line-height: 1.8;
   text-align: justify;
-}
+} */
 
 /* Responsive */
 @media (min-width: 768px) {
@@ -226,6 +251,7 @@
     </style>
 </head>
 <body>
+    {{-- navbar --}}
 <header class="navbar">
   <div class="logo">
     <img src="img/logo_umtas.png" alt="Logo">
@@ -246,26 +272,31 @@
     <a href="login">Admin</a>
   </nav>
 </header>
+<main>
 <!-- Gambar Header -->
 <div class="tentang-wrapper">
   <!-- Gambar -->
-  <div class="tentang-gambar">
-    <img src="{{ asset('img/gambar_umtas.png') }}" alt="Gedung UMTAS" class="hero-image">
-  </div>
+    @if($tentang_kami)
+        <div class="tentang-gambar">
+            <img src="{{ url('uploads/'.$tentang_kami->image) }}"
+                 alt="Gedung UMTAS"
+                 class="hero-image">
+        </div>
 
-  <!-- Konten -->
-  <div class="tentang-content">
-    <h2 class="judul">Tentang Kami</h2>
-    <p class="deskripsi">
-      ICT UMTAS adalah Unit Pelaksana Teknis Sistem Informasi Manajemen (UPT SIM)
-      di Universitas Muhammadiyah Tasikmalaya. Kami merupakan unit yang memberikan layanan
-      infrastruktur teknologi informasi, layanan data dan sistem informasi serta layanan
-      komputasi sebagai penunjang berjalannya proses akademik di lingkungan Universitas
-      Muhammadiyah Tasikmalaya. Kami mengembangkan teknologi dan manajemen sistem informasi agar
-      memenuhi kebutuhan penyelenggaraan manajemen dan administrasi universitas secara terintegrasi.
-    </p>
-  </div>
-</div>
+        <!-- Konten -->
+        <div class="card-tentang">
+            <div class="tentang-content">
+                <h2 class="judul">{{ $tentang_kami->judul }}</h2>
+                <p class="deskripsi">
+                    {{ $tentang_kami->deskripsi }}
+                </p>
+            </div>
+        </div>
+    @else
+
+    @endif
+</main>
+
 
 
   <footer style="background-color: #000b4f; color: white; ">

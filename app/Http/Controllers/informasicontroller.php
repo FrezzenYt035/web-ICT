@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\informasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Tentang_Kami;
 
 
 class informasicontroller extends Controller
@@ -23,10 +25,17 @@ class informasicontroller extends Controller
         $informasi = \App\Models\informasi::orderBy('created_at', 'desc')->get();
         return view('beranda.informasi', compact('informasi'));
     }
-    public function beranda()
+    // public function beranda()
+    // {
+    //     $informasi = \App\Models\informasi::orderBy('created_at', 'desc')->get();
+    //     return view('beranda.beranda', compact('informasi'));
+    // }
+        public function beranda()
     {
-        $informasi = \App\Models\informasi::orderBy('created_at', 'desc')->get();
-        return view('beranda.beranda', compact('informasi'));
+        $informasi   = Informasi::latest()->get();
+        $tentang_kami = Tentang_Kami::where('is_active', 1)->get(); // hanya ambil yang aktif
+
+        return view('beranda.beranda', compact('informasi', 'tentang_kami'));
     }
 
     /**
@@ -57,6 +66,7 @@ class informasicontroller extends Controller
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'gambar' => $namaFile,
+            'slug' => Str::slug($request->judul),
         ]);
 
         return redirect()->back()->with('success', 'Berhasil disimpan!');
@@ -65,20 +75,20 @@ class informasicontroller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $informasi = Informasi::findOrFail($id);
-        return view('informasi.detail', compact('informasi'));
+        $informasi = Informasi::where('slug', $slug)->firstOrFail();
+        return view('detail.detail', compact('informasi'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
           $informasi = informasi::all();
-          $informasidetail = informasi::findOrFail($id);
-          $informasigambar = asset('storage/' . $informasidetail->gambar);
+          $informasidetail = informasi::where('slug', $slug)->firstOrFail();
+          $informasigambar = asset('uploads/' . $informasidetail->gambar);
           return view('admin.informasi', compact('informasi', 'informasidetail', 'informasigambar'));
     }
 
@@ -94,7 +104,11 @@ class informasicontroller extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('images', 'public');
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $validated['gambar'] = $filename;
+
         }
 
         informasi::where('id', $id)->update($validated);

@@ -13,7 +13,7 @@
             color: yellow;
         }
          .navbar {
-            
+
                 position: sticky;
                 top: 0;
                 z-index: 1000;
@@ -44,7 +44,7 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-                <div class="text"><strong><a href="beranda">ICT dan laboratorium Umtas</a></strong></div>
+                <div class="text"><strong><a href="/beranda">ICT dan laboratorium Umtas</a></strong></div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link class="kuning" :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -55,6 +55,15 @@
                     </x-nav-link>
                     <x-nav-link class="kuning" :href="route('admin.informasi')" :active="request()->routeIs('admin.informasi')">
                         {{ __('Pusat Informasi') }}
+                    </x-nav-link>
+                    <x-nav-link class="kuning" :href="route('admin.tentang')" :active="request()->routeIs('admin.tentang')">
+                        {{ __('Tentang Kami') }}
+                    </x-nav-link>
+                    <x-nav-link class="kuning" :href="route('admin.team')" :active="request()->routeIs('admin.team')">
+                        {{ __('Anggota Team') }}
+                    </x-nav-link>
+                    <x-nav-link class="kuning" :href="route('admin.project')" :active="request()->routeIs('admin.project')">
+                        {{ __('Proyek') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -116,6 +125,15 @@
             </x-responsive-nav-link>
                <x-responsive-nav-link class="kuning" :href="route('admin.informasi')" :active="request()->routeIs('admin.informasi')">
                 {{ __('informasi') }}
+            </x-responsive-nav-link>
+                <x-responsive-nav-link class="kuning" :href="route('admin.tentang')" :active="request()->routeIs('admin.tentang')">
+                {{ __('tentang kami') }}
+            </x-responsive-nav-link>
+                <x-responsive-nav-link class="kuning" :href="route('admin.team')" :active="request()->routeIs('admin.team')">
+                {{ __('team') }}
+            </x-responsive-nav-link>
+                <x-responsive-nav-link class="kuning" :href="route('admin.project')" :active="request()->routeIs('admin.project')">
+                {{ __('proyek') }}
             </x-responsive-nav-link>
         </div>
 

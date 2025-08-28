@@ -26,15 +26,15 @@ h1 {
 }
 
 .project-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-block;
+  padding: 15px;
   justify-content: center;
   gap: 25px;
 }
 
 .card {
   background-color: white;
-  width: 300px;
+  width: 400px;
   border: 1px solid #000;
   border-radius: 5px;
   overflow: hidden;
@@ -45,7 +45,8 @@ h1 {
 
 .card img {
   width: 100%;
-  height: auto;
+  height: 250px;
+  object-fit: cover;
 }
 
 .card-content {
@@ -80,6 +81,8 @@ h1 {
   cursor: pointer;
   font-size: 14px;
   border-radius: 4px;
+  width: 30%;
+  height: 40px;
 }
 .navbar {
   display: flex;
@@ -169,8 +172,8 @@ h1 {
 
   .judul-container {
   display: flex;
-  justify-content: center; /* untuk memusatkan */
-  padding-left: 100px;     /* untuk geser sedikit dari kiri */
+  justify-content: center;
+  padding-left: 100px;
 }
 
 }
@@ -247,6 +250,7 @@ h1 {
   </style>
 </head>
 <body>
+     {{-- navbar --}}
 <header class="navbar">
   <div class="logo">
     <img src="{{ asset('img/logo_umtas.png') }}" alt="Logo">
@@ -269,42 +273,27 @@ h1 {
 </header>
 <br>
   <main>
+       {{-- title --}}
     <h1>Project ICT UMTAS</h1>
-    <div class="project-grid">
-
-      <div class="card">
-        <img src="{{ asset('img/simpeg.png') }}" alt="SIMPEG">
-        <div class="card-content">
-          <h3>SIMPEG UMTAS</h3>
-          <a href="https://simpeg.umtas.ac.id/" target="_blank">simpeg.umtas.ac.id/</a>
-          <p>Sistem Informasi Kepegawaian Universitas Muhammadiyah Tasikmalaya.</p>
-          <button onclick="window.location.href='detail_simpeg'">Detail</button>
+    @foreach ($projects as $index => $project)
+        <div class="project-grid">
+            <div class="card" data-index="{{ $index }}">
+                <img src="{{ url('uploads/'.$project->image) }}" alt="{{ $project->judul }}">
+                 <div class="card-content">
+                    <h3 class="judul">{{ $project->name }}</h3>
+                        <p class="link">
+                            <i class="fa fa-link"></i>
+                             <a href="{{ $project->link }}" target="_blank">{{ $project->link }}</a>
+                        </p>
+                    <p class="truncate-3">{{ $project->description }}</p>
+                     <button onclick="window.location.href='{{ route('project.show', $project->slug) }}'">Detail</button>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="card">
-        <img src="{{ asset('img/sikemas.png') }}" alt="SIKEMAS">
-        <div class="card-content">
-          <h3>SIKEMAS UMTAS</h3>
-          <a href="https://sikemas.umtas.ac.id/" target="_blank">sikemas.umtas.ac.id/</a>
-          <p>Sistem Informasi Kemahasiswaan Universitas Muhammadiyah Tasikmalaya.</p>
-          <button onclick="window.location.href='detail_sikemas'">Detail</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="{{ asset('img/simutu.png') }}" alt="SIMUTU">
-        <div class="card-content">
-          <h3>SIMUTU UMTAS</h3>
-          <a href="https://simutu.umtas.ac.id/" target="_blank">simutu.umtas.ac.id/</a>
-          <p>Sistem Informasi Penjaminan Mutu Universitas Muhammadiyah Tasikmalaya.</p>
-          <button onclick="window.location.href='detail_simutu'">Detail</button>
-        </div>
-      </div>
-
+    @endforeach
     </div>
   </main>
-
+        {{-- footer --}}
   <footer style="background-color: #000b4f; color: white; ">
   <div class="footer-container">
     <div class="footer-col" style="padding: 40px 20px;">
